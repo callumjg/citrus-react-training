@@ -18,7 +18,10 @@ const UsersPage: React.FC = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  console.log(users);
+  const filterUsers = users?.filter((user) => {
+    const regex = new RegExp(search, "i");
+    return user.email.match(regex) || user.name.match(regex);
+  });
 
   return (
     <Layout title="Users" subtitle="React users app">
@@ -30,7 +33,7 @@ const UsersPage: React.FC = () => {
         </div>
         <div className="row">
           <div className="col">
-            {loading ? <p>Loading...</p> : <UsersTable users={users} />}
+            {loading ? <p>Loading...</p> : <UsersTable users={filterUsers} />}
           </div>
           <div className="col">
             <UserDetail />
