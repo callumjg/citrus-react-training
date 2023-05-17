@@ -1,5 +1,5 @@
-import Layout from "./Layout";
+import UsersPage from "../pages/UsersPage";
 
-const App: React.FC = () => <Layout title="Users App" />;
+const App: React.FC = () => <UsersPage />;
 
 export default App;
