@@ -1,18 +1,20 @@
-import { User } from "../types";
+import useUser from "../hooks/useUser";
 
 interface UserDetailProps {
-  user?: User;
+  userId?: number;
 }
-const UserDetail: React.FC<UserDetailProps> = ({ user }) =>
-  user ? (
+const UserDetail: React.FC<UserDetailProps> = ({ userId }) => {
+  const [user, loading] = useUser(userId);
+  return loading ? (
+    <p>Loading...</p>
+  ) : user ? (
     <div>
       <h3>{user?.name}</h3>
       <div>ID: {user?.id}</div>
       <div>Email: {user?.email}</div>
       <div>Phone: {user?.phone}</div>
     </div>
-  ) : (
-    <p>-</p>
-  );
+  ) : null;
+};
 
 export default UserDetail;

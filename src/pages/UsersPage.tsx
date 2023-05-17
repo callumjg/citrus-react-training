@@ -3,13 +3,11 @@ import Layout from "../components/Layout";
 import UserDetail from "../components/UserDetail";
 import UsersTable from "../components/UsersTable";
 import Input from "../components/Input";
-import { User } from "../types";
 import useUsers from "../hooks/useUsers";
 
 const UsersPage: React.FC = () => {
   const [search, setSearch] = useState("");
-
-  const [selectedUser, setSelectedUser] = useState<User | undefined>();
+  const [selectedUserId, setSelectedUserId] = useState<number | undefined>();
   const [users, loading] = useUsers(search);
 
   return (
@@ -25,11 +23,11 @@ const UsersPage: React.FC = () => {
             {loading ? (
               <p>Loading...</p>
             ) : (
-              <UsersTable users={users} selectUser={setSelectedUser} />
+              <UsersTable users={users} selectUserId={setSelectedUserId} />
             )}
           </div>
           <div className="col">
-            <UserDetail user={selectedUser} />
+            <UserDetail userId={selectedUserId} />
           </div>
         </div>
       </div>
