@@ -1,28 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Layout from "../components/Layout";
 import UserDetail from "../components/UserDetail";
 import UsersTable from "../components/UsersTable";
 import Input from "../components/Input";
 import { User } from "../types";
+import useUsers from "../hooks/useUsers";
 
 const UsersPage: React.FC = () => {
   const [search, setSearch] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [users, setUsers] = useState<User[] | undefined>();
+
   const [selectedUser, setSelectedUser] = useState<User | undefined>();
-
-  useEffect(() => {
-    setLoading(true);
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((res) => res.json())
-      .then((users) => setUsers(users))
-      .finally(() => setLoading(false));
-  }, []);
-
-  const filterUsers = users?.filter((user) => {
-    const regex = new RegExp(search, "i");
-    return user.email.match(regex) || user.name.match(regex);
-  });
+  const [users, loading] = useUsers(search);
 
   return (
     <Layout title="Users" subtitle="React users app">
@@ -37,7 +25,7 @@ const UsersPage: React.FC = () => {
             {loading ? (
               <p>Loading...</p>
             ) : (
-              <UsersTable users={filterUsers} selectUser={setSelectedUser} />
+              <UsersTable users={users} selectUser={setSelectedUser} />
             )}
           </div>
           <div className="col">
