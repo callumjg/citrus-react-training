@@ -36,7 +36,7 @@ const UsersPage: React.FC = () => {
             {loading ? <p>Loading...</p> : <UsersTable users={filterUsers} />}
           </div>
           <div className="col">
-            <UserDetail />
+            <UserDetail user={users && users[0]} />
           </div>
         </div>
       </div>
