@@ -1,26 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import UserDetail from "../components/UserDetail";
 import UsersTable from "../components/UsersTable";
+import Input from "../components/Input";
+import { User } from "../types";
 
 const UsersPage: React.FC = () => {
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [users, setUsers] = useState<User[] | undefined>();
+
+  useEffect(() => {
+    setLoading(true);
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((res) => res.json())
+      .then((users) => setUsers(users))
+      .finally(() => setLoading(false));
+  }, []);
+
+  console.log(users);
 
   return (
     <Layout title="Users" subtitle="React users app">
       <div className="container-fluid">
         <div className="row">
           <div className="col">
-            <input
-              className="form-control"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
+            <Input value={search} setValue={setSearch} />
           </div>
         </div>
         <div className="row">
           <div className="col">
-            <UsersTable />
+            {loading ? <p>Loading...</p> : <UsersTable users={users} />}
           </div>
           <div className="col">
             <UserDetail />
