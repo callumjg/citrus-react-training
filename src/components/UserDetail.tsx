@@ -12,7 +12,7 @@ const UserDetail: React.FC<UserDetailProps> = ({ user }) =>
       <div>Phone: {user?.phone}</div>
     </div>
   ) : (
-    <p>Not found</p>
+    <p>-</p>
   );
 
 export default UserDetail;

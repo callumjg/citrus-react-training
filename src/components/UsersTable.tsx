@@ -2,9 +2,10 @@ import { User } from "../types";
 
 interface UsersTableProps {
   users?: User[];
+  selectUser?: (u: User) => void;
 }
 
-const UsersTable: React.FC<UsersTableProps> = ({ users }) => (
+const UsersTable: React.FC<UsersTableProps> = ({ users, selectUser }) => (
   <table className="table">
     <thead>
       <tr>
@@ -14,7 +15,7 @@ const UsersTable: React.FC<UsersTableProps> = ({ users }) => (
     </thead>
     <tbody>
       {users?.map((user) => (
-        <tr key={user.id}>
+        <tr key={user.id} onClick={() => selectUser && selectUser(user)}>
           <td>{user.id}</td>
           <td>{user.email}</td>
         </tr>

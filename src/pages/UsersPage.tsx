@@ -9,6 +9,7 @@ const UsersPage: React.FC = () => {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState<User[] | undefined>();
+  const [selectedUser, setSelectedUser] = useState<User | undefined>();
 
   useEffect(() => {
     setLoading(true);
@@ -33,10 +34,14 @@ const UsersPage: React.FC = () => {
         </div>
         <div className="row">
           <div className="col">
-            {loading ? <p>Loading...</p> : <UsersTable users={filterUsers} />}
+            {loading ? (
+              <p>Loading...</p>
+            ) : (
+              <UsersTable users={filterUsers} selectUser={setSelectedUser} />
+            )}
           </div>
           <div className="col">
-            <UserDetail user={users && users[0]} />
+            <UserDetail user={selectedUser} />
           </div>
         </div>
       </div>
